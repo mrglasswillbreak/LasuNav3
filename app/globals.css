@@ -1,0 +1,55 @@
+:root {
+  color-scheme: dark;
+  background: #0f172a;
+  color: #e2e8f0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+.page {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 2rem;
+}
+
+.hero {
+  max-width: 42rem;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  border-radius: 1.5rem;
+  background: rgba(15, 23, 42, 0.75);
+  padding: clamp(2rem, 8vw, 4rem);
+  text-align: center;
+  box-shadow: 0 24px 80px rgba(2, 6, 23, 0.4);
+}
+
+.eyebrow {
+  margin: 0 0 1rem;
+  color: #38bdf8;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2.5rem, 10vw, 5rem);
+  line-height: 1;
+}
+
+.description {
+  margin: 1.5rem auto 0;
+  max-width: 32rem;
+  color: #cbd5e1;
+  font-size: 1.125rem;
+  line-height: 1.7;
+}
