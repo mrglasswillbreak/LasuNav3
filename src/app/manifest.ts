@@ -12,7 +12,10 @@ export default function manifest(): MetadataRoute.Manifest {
     theme_color: "#0b6b46",
     orientation: "portrait-primary",
     categories: ["travel", "navigation", "education"],
-    icons: [{ src: "/icons/icon.svg", sizes: "any", type: "image/svg+xml", purpose: "any maskable" }],
+    icons: [
+      { src: "/icons/icon.svg", sizes: "any", type: "image/svg+xml", purpose: "any" },
+      { src: "/icons/icon.svg", sizes: "any", type: "image/svg+xml", purpose: "maskable" },
+    ],
     shortcuts: [{ name: "Find a place", url: "/?action=search", icons: [{ src: "/icons/icon.svg", sizes: "any" }] }],
   };
 }
