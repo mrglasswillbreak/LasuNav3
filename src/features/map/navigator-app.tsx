@@ -15,7 +15,18 @@ export function NavigatorApp() {
   const { resolvedTheme } = useTheme(); const pack = useMapPack(); const location = useGeolocation();
   const [pois, setPois] = useState<POI[]>([]); const [graph, setGraph] = useState<RoutingGraph>(); const [query, setQuery] = useState(""); const [startPoi, setStartPoi] = useState<POI>(); const [destination, setDestination] = useState<POI>(); const [route, setRoute] = useState<Route>();
   const offRouteSince = useRef<number | undefined>(undefined);
-  useEffect(() => { if (pack.status !== "ready") return; void getOfflineData().then((data) => { setPois(data.pois ?? []); setGraph(data.graph); }); }, [pack.status]);
+  useEffect(() => {
+    if (pack.status === "ready") {
+      void getOfflineData().then((data) => { setPois(data.pois ?? []); setGraph(data.graph); });
+      return;
+    }
+    // Preview the published campus data on first visit. Offline navigation still
+    // requires an explicit IndexedDB pack download.
+    void Promise.all([
+      fetch("/packs/lasu-ojo-graph.json").then((response) => response.ok ? response.json() : undefined),
+      fetch("/packs/lasu-ojo-pois.json").then((response) => response.ok ? response.json() : []),
+    ]).then(([previewGraph, previewPois]) => { setGraph(previewGraph); setPois(previewPois); }).catch(() => undefined);
+  }, [pack.status]);
   useEffect(() => { if (!graph || !destination || route) return; const start = location.position ?? startPoi?.position ?? graph.nodes[0]?.position; if (start) setRoute(findRoute(graph, start, destination.position)); }, [graph, destination, startPoi, location.position, route]);
   useEffect(() => {
     if (!graph || !destination || !route || !location.position) return;
