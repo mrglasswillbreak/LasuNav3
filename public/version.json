@@ -1,0 +1,15 @@
+{
+  "appVersion": "0.1.0",
+  "latestPack": {
+    "packId": "lasu-ojo-campus",
+    "version": "2026.07.seed",
+    "releasedAt": "2026-07-12T00:00:00.000Z",
+    "bounds": [3.196, 6.463, 3.204, 6.469],
+    "releaseNotes": "Seed pack for the application scaffold. Replace with the generated ArcGIS + OSM pack before production.",
+    "attribution": ["© OpenStreetMap contributors", "Lagos State University campus map"],
+    "files": [
+      { "id": "graph", "url": "/packs/lasu-ojo-graph.json", "bytes": 670, "sha256": "development", "contentType": "application/json" },
+      { "id": "pois", "url": "/packs/lasu-ojo-pois.json", "bytes": 750, "sha256": "development", "contentType": "application/json" }
+    ]
+  }
+}
