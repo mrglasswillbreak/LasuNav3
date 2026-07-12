@@ -1,7 +1,7 @@
 "use client";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { useEffect, useRef } from "react";
-import maplibregl, { Marker, type Map } from "maplibre-gl";
+import maplibregl, { Marker, type Map as MapLibreMap } from "maplibre-gl";
 import type { POI, RoutingGraph } from "@/features/offline-pack/types";
 import type { Position } from "@/lib/geo/geometry";
 import type { Route } from "@/features/navigation/router";
@@ -12,7 +12,7 @@ const CAMPUS: Position = [3.2008, 6.4655];
 let pmtilesProtocolRegistered = false;
 
 export function CampusMap({ pois, graph, route, position, heading, dark, follow, hasPmtiles }: Props) {
-  const element = useRef<HTMLDivElement>(null); const map = useRef<Map | undefined>(undefined); const userMarker = useRef<Marker | undefined>(undefined);
+  const element = useRef<HTMLDivElement>(null); const map = useRef<MapLibreMap | undefined>(undefined); const userMarker = useRef<Marker | undefined>(undefined);
   useEffect(() => {
     if (!element.current || map.current) return;
     if (!pmtilesProtocolRegistered) { const protocol = registerOfflinePmtilesProtocol(); maplibregl.addProtocol("pmtiles", protocol.tile); pmtilesProtocolRegistered = true; }
