@@ -12,6 +12,8 @@ const withSerwist = withSerwistInit({
   swDest: "public/sw.js",
   disable: process.env.NODE_ENV === "development",
   register: true,
+  // Pack assets are explicitly streamed into IndexedDB; version.json must remain network-checkable.
+  exclude: [/version\.json$/, /packs\//],
 });
 
 export default withSerwist(nextConfig);

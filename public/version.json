@@ -2,14 +2,41 @@
   "appVersion": "0.1.0",
   "latestPack": {
     "packId": "lasu-ojo-campus",
-    "version": "2026.07.seed",
-    "releasedAt": "2026-07-12T00:00:00.000Z",
-    "bounds": [3.196, 6.463, 3.204, 6.469],
-    "releaseNotes": "Seed pack for the application scaffold. Replace with the generated ArcGIS + OSM pack before production.",
-    "attribution": ["© OpenStreetMap contributors", "Lagos State University campus map"],
+    "version": "2026-07-12",
+    "releasedAt": "2026-07-12T18:58:15.862Z",
+    "bounds": [
+      3.194442388439201,
+      6.461934508993777,
+      3.2054054281681212,
+      6.485585393525185
+    ],
+    "releaseNotes": "Official ArcGIS campus features merged with 546 OSM walkable ways.",
+    "attribution": [
+      "Campus features © Lagos State University ArcGIS web map",
+      "© OpenStreetMap contributors"
+    ],
     "files": [
-      { "id": "graph", "url": "/packs/lasu-ojo-graph.json", "bytes": 670, "sha256": "development", "contentType": "application/json" },
-      { "id": "pois", "url": "/packs/lasu-ojo-pois.json", "bytes": 750, "sha256": "development", "contentType": "application/json" }
+      {
+        "id": "pmtiles",
+        "url": "/packs/lasu-ojo.pmtiles",
+        "bytes": 28167,
+        "sha256": "b45e6c19983e225d604c8a1cad88211aaba720b7bca2c7edae304b677d2d659b",
+        "contentType": "application/vnd.pmtiles"
+      },
+      {
+        "id": "graph",
+        "url": "/packs/lasu-ojo-graph.json",
+        "bytes": 298460,
+        "sha256": "b6a28311cdb254a328ff64b0cb18fab5f4d30d62183e2024205f0901821f37ac",
+        "contentType": "application/json"
+      },
+      {
+        "id": "pois",
+        "url": "/packs/lasu-ojo-pois.json",
+        "bytes": 14902,
+        "sha256": "d1896ba61c3e01e9e8215d036352845b70da6a7a7890fb5fcd4a17433f013218",
+        "contentType": "application/json"
+      }
     ]
   }
 }

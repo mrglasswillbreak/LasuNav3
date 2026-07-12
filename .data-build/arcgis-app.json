@@ -1,0 +1,181 @@
+{
+  "appId": "09b40eee207447d39060a4eaf0df8e59",
+  "title": "Lagos State University Campus",
+  "item": {
+    "id": "09b40eee207447d39060a4eaf0df8e59",
+    "owner": "MangroveandpartnersLimited",
+    "ownerId": "0c11563193d54c88b701ee199301bfd6",
+    "created": 1646123971000,
+    "modified": 1649145417000,
+    "guid": null,
+    "name": null,
+    "title": "Lagos State University Campus",
+    "type": "Web Mapping Application",
+    "typeKeywords": [
+      "configurableApp",
+      "JavaScript",
+      "Map",
+      "Mapping Site",
+      "Online Map",
+      "Ready To Use",
+      "Web Map"
+    ],
+    "description": "This is a map of Lagos State University Campus Map",
+    "tags": [
+      "Lagos State",
+      "University",
+      "Campus",
+      "Building",
+      "Infrastructure",
+      "LULC"
+    ],
+    "snippet": "",
+    "thumbnail": "thumbnail/ago_downloaded.png",
+    "documentation": null,
+    "extent": [],
+    "categories": [],
+    "spatialReference": null,
+    "accessInformation": null,
+    "classification": null,
+    "licenseInfo": null,
+    "culture": "en-us",
+    "properties": null,
+    "advancedSettings": null,
+    "url": "https://www.arcgis.com/apps/instant/minimalist/index.html?appid=09b40eee207447d39060a4eaf0df8e59",
+    "proxyFilter": null,
+    "access": "public",
+    "size": 1970,
+    "subInfo": 0,
+    "appCategories": [],
+    "industries": [],
+    "languages": [],
+    "largeThumbnail": null,
+    "banner": null,
+    "screenshots": [],
+    "listed": false,
+    "commentsEnabled": true,
+    "numComments": 0,
+    "numRatings": 0,
+    "avgRating": 0,
+    "numViews": 562,
+    "scoreCompleteness": 58,
+    "groupDesignations": null,
+    "apiToken1ExpirationDate": -1,
+    "apiToken2ExpirationDate": -1,
+    "lastViewed": 1783303200000,
+    "robots": [
+      "noindex",
+      "nofollow"
+    ]
+  },
+  "configuration": {
+    "source": "67a495441aa7477fb283a8eee0a40cf1",
+    "folderId": null,
+    "values": {
+      "header": true,
+      "title": "Lagos State University Campus Map",
+      "activePanel": "layerListPanel",
+      "legendPanel": true,
+      "layerListPanel": true,
+      "popupPanel": true,
+      "details": true,
+      "coverPage": false,
+      "coverPageConfig": {
+        "title": "Title",
+        "titleColor": "#ffffff",
+        "subtitle": "Subtitle",
+        "subtitleColor": "#ffffff",
+        "textPosition": "center-leading",
+        "buttonText": "Explore",
+        "buttonTextColor": "#ffffff",
+        "background": {
+          "backgroundType": "color",
+          "backgroundImage": null,
+          "backgroundColor": "#0079c1"
+        }
+      },
+      "popupHover": false,
+      "home": true,
+      "homePosition": {
+        "position": "top-left",
+        "index": 0
+      },
+      "locateWidget": false,
+      "locateWidgetPosition": {
+        "position": "top-right",
+        "index": 0
+      },
+      "mapZoom": true,
+      "mapZoomPosition": {
+        "position": "top-left",
+        "index": 1
+      },
+      "bookmarks": false,
+      "bookmarksPosition": {
+        "position": "top-right",
+        "index": 1
+      },
+      "bookmarkThumbnail": true,
+      "disableScroll": false,
+      "scalebar": true,
+      "scalebarPosition": {
+        "position": "bottom-left",
+        "index": 0
+      },
+      "extentSelector": false,
+      "basemapToggle": false,
+      "basemapSelector": "streets-vector",
+      "basemapTogglePosition": {
+        "position": "bottom-right",
+        "index": 0
+      },
+      "screenshot": false,
+      "screenshotPosition": {
+        "position": "top-left",
+        "index": 2
+      },
+      "share": true,
+      "search": true,
+      "searchPosition": {
+        "position": "top-right",
+        "index": 1
+      },
+      "searchOpenAtStart": true,
+      "searchConfiguration": {
+        "sources": [
+          {
+            "locator": {
+              "url": "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"
+            },
+            "singleLineFieldName": null,
+            "name": "ArcGIS World Geocoding Service",
+            "placeholder": "",
+            "maxResults": null,
+            "maxSuggestions": null,
+            "suggestionsEnabled": null,
+            "minSuggestCharacters": 1,
+            "withinViewEnabled": false,
+            "countryCode": null,
+            "zoomScale": null
+          }
+        ],
+        "activeSourceIndex": 0,
+        "includeDefaultSources": false
+      },
+      "customURLParamName": "",
+      "theme": "light",
+      "applySharedTheme": true,
+      "customCSS": "",
+      "layoutType": "default",
+      "webmap": "ffd68667b1464eeb999c0050897a82a0",
+      "type": "webmap",
+      "datePublished": 1649085176641,
+      "fullAppSettings": true,
+      "draft": {
+        "layoutType": "default",
+        "lastSavedDraftDate": 1649145419580
+      }
+    }
+  },
+  "retrievedAt": "2026-07-12T18:54:41.327Z"
+}
