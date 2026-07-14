@@ -1,6 +1,6 @@
 "use client";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import maplibregl, { Marker, type Map as MapLibreMap } from "maplibre-gl";
 import type { POI, RoutingGraph } from "@/features/offline-pack/types";
 import type { Position } from "@/lib/geo/geometry";
@@ -13,6 +13,7 @@ let pmtilesProtocolRegistered = false;
 
 export function CampusMap({ pois, graph, route, position, heading, dark, follow, hasPmtiles }: Props) {
   const element = useRef<HTMLDivElement>(null); const map = useRef<MapLibreMap | undefined>(undefined); const userMarker = useRef<Marker | undefined>(undefined);
+  const [mapReady, setMapReady] = useState(false);
   useEffect(() => {
     if (!element.current || map.current) return;
     if (!pmtilesProtocolRegistered) { const protocol = registerOfflinePmtilesProtocol(); maplibregl.addProtocol("pmtiles", protocol.tile); pmtilesProtocolRegistered = true; }
@@ -31,29 +32,30 @@ export function CampusMap({ pois, graph, route, position, heading, dark, follow,
       instance.addLayer({ id: "user", type: "circle", source: "user", paint: { "circle-radius": 8, "circle-color": "#0b6b46", "circle-stroke-color": "#fff", "circle-stroke-width": 3 } });
       const markerElement = document.createElement("div"); markerElement.innerHTML = '<svg width="50" height="50" viewBox="0 0 50 50" aria-label="Your location"><circle class="location-pulse" cx="25" cy="25" r="13" fill="#0b6b46"/><path d="M25 7 34 34 25 30 16 34z" fill="#0b6b46" stroke="white" stroke-width="3" stroke-linejoin="round"/></svg>';
       userMarker.current = new maplibregl.Marker({ element: markerElement, rotationAlignment: "map" }).setLngLat(CAMPUS).addTo(instance);
+      setMapReady(true);
     });
-    return () => { userMarker.current?.remove(); instance.remove(); map.current = undefined; };
+    return () => { setMapReady(false); userMarker.current?.remove(); instance.remove(); map.current = undefined; };
   }, []);
   useEffect(() => {
-    const instance = map.current; if (!instance?.isStyleLoaded() || !hasPmtiles || instance.getSource("campus-vector")) return;
+    const instance = map.current; if (!mapReady || !instance || !hasPmtiles || instance.getSource("campus-vector")) return;
     instance.addSource("campus-vector", { type: "vector", url: "pmtiles://idb://lasu-ojo-active" });
     instance.addLayer({ id: "campus-polygons", type: "fill", source: "campus-vector", "source-layer": "campus", filter: ["==", ["geometry-type"], "Polygon"], paint: { "fill-color": dark ? "#244b3a" : "#c7ddcf", "fill-opacity": .6 } });
     instance.addLayer({ id: "campus-lines", type: "line", source: "campus-vector", "source-layer": "campus", filter: ["==", ["geometry-type"], "LineString"], paint: { "line-color": dark ? "#6eaf89" : "#477a5d", "line-width": 2 } });
-  }, [hasPmtiles, dark]);
+  }, [hasPmtiles, dark, mapReady]);
   useEffect(() => {
-    const instance = map.current; if (!instance?.isStyleLoaded()) return;
+    const instance = map.current; if (!mapReady || !instance) return;
     instance.setPaintProperty("background", "background-color", dark ? "#12201a" : "#e9f1ed");
     const pathFeatures = pois.map((poi) => ({ type: "Feature" as const, properties: {}, geometry: { type: "Point" as const, coordinates: poi.position } }));
     (instance.getSource("pois") as maplibregl.GeoJSONSource | undefined)?.setData({ type: "FeatureCollection", features: pathFeatures });
-  }, [dark, pois]);
+  }, [dark, pois, mapReady]);
   useEffect(() => {
-    const instance = map.current; if (!instance?.isStyleLoaded() || !graph) return;
+    const instance = map.current; if (!mapReady || !instance || !graph) return;
     const nodes = new Map(graph.nodes.map((node) => [node.id, node.position]));
     (instance.getSource("paths") as maplibregl.GeoJSONSource | undefined)?.setData({ type: "FeatureCollection", features: graph.edges.flatMap((edge) => {
       const from = nodes.get(edge.from), to = nodes.get(edge.to); return from && to ? [{ type: "Feature" as const, properties: { name: edge.name }, geometry: { type: "LineString" as const, coordinates: [from, to] } }] : [];
     }) });
-  }, [graph]);
-  useEffect(() => { const instance = map.current; if (!instance?.isStyleLoaded()) return; (instance.getSource("route") as maplibregl.GeoJSONSource | undefined)?.setData({ type: "FeatureCollection", features: route ? [{ type: "Feature", properties: {}, geometry: { type: "LineString", coordinates: route.coordinates } }] : [] }); }, [route]);
-  useEffect(() => { const instance = map.current; if (!instance?.isStyleLoaded()) return; (instance.getSource("user") as maplibregl.GeoJSONSource | undefined)?.setData({ type: "FeatureCollection", features: position ? [{ type: "Feature", properties: { heading }, geometry: { type: "Point", coordinates: position } }] : [] }); if (position) { userMarker.current?.setLngLat(position).setRotation(heading ?? 0); if (follow) instance.easeTo({ center: position, duration: 800, essential: true }); } }, [position, heading, follow]);
+  }, [graph, mapReady]);
+  useEffect(() => { const instance = map.current; if (!mapReady || !instance) return; (instance.getSource("route") as maplibregl.GeoJSONSource | undefined)?.setData({ type: "FeatureCollection", features: route ? [{ type: "Feature", properties: {}, geometry: { type: "LineString", coordinates: route.coordinates } }] : [] }); }, [route, mapReady]);
+  useEffect(() => { const instance = map.current; if (!mapReady || !instance) return; (instance.getSource("user") as maplibregl.GeoJSONSource | undefined)?.setData({ type: "FeatureCollection", features: position ? [{ type: "Feature", properties: { heading }, geometry: { type: "Point", coordinates: position } }] : [] }); if (position) { userMarker.current?.setLngLat(position).setRotation(heading ?? 0); if (follow) instance.easeTo({ center: position, duration: 800, essential: true }); } }, [position, heading, follow, mapReady]);
   return <div ref={element} className="absolute inset-0" aria-label="LASU Ojo campus map" />;
 }

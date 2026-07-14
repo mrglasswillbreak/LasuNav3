@@ -2,8 +2,8 @@
   "appVersion": "0.1.0",
   "latestPack": {
     "packId": "lasu-ojo-campus",
-    "version": "2026-07-12",
-    "releasedAt": "2026-07-12T18:58:15.862Z",
+    "version": "2026-07-14-efe98bf5",
+    "releasedAt": "2026-07-14T20:46:11.975Z",
     "bounds": [
       3.194442388439201,
       6.461934508993777,
@@ -26,15 +26,15 @@
       {
         "id": "graph",
         "url": "/packs/lasu-ojo-graph.json",
-        "bytes": 298460,
-        "sha256": "b6a28311cdb254a328ff64b0cb18fab5f4d30d62183e2024205f0901821f37ac",
+        "bytes": 95139,
+        "sha256": "72e1def05ac09d4a77f955615156e73c37849b799da857e6549bf9304e3439f8",
         "contentType": "application/json"
       },
       {
         "id": "pois",
         "url": "/packs/lasu-ojo-pois.json",
-        "bytes": 14902,
-        "sha256": "d1896ba61c3e01e9e8215d036352845b70da6a7a7890fb5fcd4a17433f013218",
+        "bytes": 14621,
+        "sha256": "2cc72431de47c034d09264e8d6fb17583e2eb0c512c386287b13f9ea447fd09e",
         "contentType": "application/json"
       }
     ]
