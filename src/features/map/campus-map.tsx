@@ -5,7 +5,8 @@ import maplibregl, { Marker, type Map as MapLibreMap } from "maplibre-gl";
 import type { POI, RoutingGraph } from "@/features/offline-pack/types";
 import type { Position } from "@/lib/geo/geometry";
 import type { Route } from "@/features/navigation/router";
-import { registerOfflinePmtilesProtocol } from "./idb-pmtiles-source";
+import { publicAsset } from "@/lib/public-asset";
+import { registerPreviewPmtiles } from "./idb-pmtiles-source";
 
 type Props = { pois: POI[]; graph?: RoutingGraph; route?: Route; position?: Position; heading?: number; dark: boolean; follow: boolean; hasPmtiles: boolean };
 const CAMPUS: Position = [3.2008, 6.4655];
@@ -16,12 +17,17 @@ export function CampusMap({ pois, graph, route, position, heading, dark, follow,
   const [mapReady, setMapReady] = useState(false);
   useEffect(() => {
     if (!element.current || map.current) return;
-    if (!pmtilesProtocolRegistered) { const protocol = registerOfflinePmtilesProtocol(); maplibregl.addProtocol("pmtiles", protocol.tile); pmtilesProtocolRegistered = true; }
+    const previewPmtilesUrl = publicAsset("packs/lasu-ojo.pmtiles");
+    const protocol = registerPreviewPmtiles(previewPmtilesUrl);
+    if (!pmtilesProtocolRegistered) { maplibregl.addProtocol("pmtiles", protocol.tile); pmtilesProtocolRegistered = true; }
     const instance = map.current = new maplibregl.Map({ container: element.current, center: CAMPUS, zoom: 15.5, attributionControl: false, style: { version: 8, sources: {}, layers: [{ id: "background", type: "background", paint: { "background-color": "#e9f1ed" } }] } });
     instance.addControl(new maplibregl.NavigationControl({ showCompass: false }), "bottom-right"); instance.addControl(new maplibregl.AttributionControl({ compact: true }), "bottom-left");
     instance.on("load", () => {
       instance.addSource("paths", { type: "geojson", data: { type: "FeatureCollection", features: [] } });
       instance.addLayer({ id: "paths", type: "line", source: "paths", paint: { "line-color": "#9ab6a6", "line-width": 4, "line-opacity": .65 } });
+      instance.addSource("campus-preview", { type: "vector", url: `pmtiles://${previewPmtilesUrl}` });
+      instance.addLayer({ id: "campus-preview-polygons", type: "fill", source: "campus-preview", "source-layer": "campus", filter: ["==", ["geometry-type"], "Polygon"], paint: { "fill-color": "#c7ddcf", "fill-opacity": .6 } });
+      instance.addLayer({ id: "campus-preview-lines", type: "line", source: "campus-preview", "source-layer": "campus", filter: ["==", ["geometry-type"], "LineString"], paint: { "line-color": "#477a5d", "line-width": 2 } });
       instance.addSource("route", { type: "geojson", data: { type: "FeatureCollection", features: [] } });
       instance.addLayer({ id: "route-casing", type: "line", source: "route", paint: { "line-color": "#ffffff", "line-width": 10, "line-opacity": .85 } });
       instance.addLayer({ id: "route", type: "line", source: "route", paint: { "line-color": "#087e4d", "line-width": 6, "line-opacity": 1 } });
@@ -45,6 +51,8 @@ export function CampusMap({ pois, graph, route, position, heading, dark, follow,
   useEffect(() => {
     const instance = map.current; if (!mapReady || !instance) return;
     instance.setPaintProperty("background", "background-color", dark ? "#12201a" : "#e9f1ed");
+    instance.setPaintProperty("campus-preview-polygons", "fill-color", dark ? "#244b3a" : "#c7ddcf");
+    instance.setPaintProperty("campus-preview-lines", "line-color", dark ? "#6eaf89" : "#477a5d");
     const pathFeatures = pois.map((poi) => ({ type: "Feature" as const, properties: {}, geometry: { type: "Point" as const, coordinates: poi.position } }));
     (instance.getSource("pois") as maplibregl.GeoJSONSource | undefined)?.setData({ type: "FeatureCollection", features: pathFeatures });
   }, [dark, pois, mapReady]);

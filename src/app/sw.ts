@@ -18,7 +18,7 @@ const serwist = new Serwist({
   runtimeCaching: [
     ...defaultCache,
     {
-      matcher: ({ url }) => url.pathname === "/version.json",
+      matcher: ({ url }) => url.pathname.endsWith("/version.json"),
       handler: new NetworkFirst({ cacheName: "lasu-version", networkTimeoutSeconds: 3 }),
     },
   ],

@@ -11,6 +11,10 @@ npm run dev
 
 Open `http://localhost:3000`, use **Download LASU map**, then reload while offline to test the local graph and POI pack.
 
+## Static deployment
+
+The exported app works from either a domain root or a repository subpath. The included GitHub Pages workflow builds and publishes `main` with the repository name as the Next.js base path; select **GitHub Actions** as the Pages source in the repository settings. For a manual GitHub Pages build, set `NEXT_PUBLIC_BASE_PATH=/LasuNav3` before running `npm run build`, then publish the generated `out/` directory. Root-hosted services such as Vercel or Netlify require no extra setting.
+
 ## Campus data packs
 
 `public/version.json` describes the active downloadable pack. The committed seed pack is intentionally small and exists to exercise offline installation, search, and routing. Before release, run `npm run data:build`, then use the GIS container under `scripts/data-build/` to replace it with a versioned PMTiles archive, route graph, and POI index generated from the public LASU ArcGIS map and OSM pedestrian data.

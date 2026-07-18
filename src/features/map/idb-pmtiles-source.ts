@@ -15,3 +15,10 @@ export function registerOfflinePmtilesProtocol() {
   protocol.add(new PMTiles(new IndexedDbPmtilesSource()));
   return protocol;
 }
+
+/** Adds the bundled PMTiles archive used before an offline pack is installed. */
+export function registerPreviewPmtiles(url: string) {
+  const currentProtocol = registerOfflinePmtilesProtocol();
+  currentProtocol.add(new PMTiles(url));
+  return currentProtocol;
+}

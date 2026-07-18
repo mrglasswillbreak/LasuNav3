@@ -9,7 +9,7 @@ export function useMapPack() {
   const check = useCallback(async () => {
     const [active, version] = await Promise.all([getActivePack(), getVersionDocument().catch(() => undefined)]);
     if (active) { setManifest(active.manifest); setStatus("ready"); }
-    if (version) { setAvailable(version.latestPack); if (!active) setManifest(version.latestPack); }
+    if (version) setAvailable(version.latestPack);
   }, []);
   useEffect(() => { void check(); const listener = () => void check(); window.addEventListener("online", listener); return () => window.removeEventListener("online", listener); }, [check]);
   const download = useCallback(async () => {

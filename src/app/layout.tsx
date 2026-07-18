@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: "Offline walking navigation for LASU Ojo campus.",
   applicationName: "LASU Navigator",
   appleWebApp: { capable: true, statusBarStyle: "black-translucent", title: "LASU Nav" },
-  icons: { icon: "/icons/icon.svg", apple: "/icons/icon.svg" },
+  icons: { icon: "./icons/icon.svg", apple: "./icons/icon.svg" },
 };
 
 export const viewport: Viewport = { themeColor: "#0b6b46", colorScheme: "light dark" };

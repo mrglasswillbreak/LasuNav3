@@ -1,13 +1,21 @@
 import { clearPack, getDb, activeVersion, setActiveVersion } from "./db";
 import { createSHA256 } from "hash-wasm";
 import type { MapPackManifest, PackFile, POI, RoutingGraph, StoredPack, VersionDocument } from "./types";
+import { publicAsset } from "@/lib/public-asset";
 
 const CHUNK_SIZE = 1024 * 1024;
 
 export async function getVersionDocument(signal?: AbortSignal): Promise<VersionDocument> {
-  const response = await fetch("/version.json", { cache: "no-store", signal });
+  const response = await fetch(publicAsset("version.json"), { cache: "no-store", signal });
   if (!response.ok) throw new Error("Could not check for campus-map updates.");
-  return response.json();
+  const version = await response.json() as VersionDocument;
+  return {
+    ...version,
+    latestPack: {
+      ...version.latestPack,
+      files: version.latestPack.files.map((file) => ({ ...file, url: publicAsset(file.url) })),
+    },
+  };
 }
 
 export async function getActivePack(): Promise<StoredPack | undefined> {
